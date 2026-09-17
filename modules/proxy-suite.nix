@@ -41,7 +41,7 @@
       };
     };
 
-    tray = {
+    gui = {
       autostart = true;
       enable = true;
     };
