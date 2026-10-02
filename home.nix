@@ -28,6 +28,8 @@
     vlc
     xnviewmp
     distrobox
+    opencode
+    uv
 
     nur.repos.trev.helium
     nur.repos.quriosity.zen-browser
@@ -72,34 +74,13 @@
       ];
     };
 
-    zed-editor = {
+    vscode = {
       enable = true;
-      extensions = [
-        "adwaita"
-        "nix"
-        "toml"
-        "elixir"
-        "make"
-        "dockerfile"
-        "docker-compose"
-        "html"
-        "helm"
-      ];
-      userSettings = {
-        buffer_font_size = 16;
-        buffer_font_family = "UbuntuMono Nerd Font";
-        disable_ai = true;
-        telemetry = {
-          metrics = false;
-        };
-        ui_font_size = 16;
-        vim_mode = false;
-        settings = {
-          lsp = {
-
-          };
-        };
+      enterprisePolicies = {
+        "UpdateMode" = "none";
+        "TelemetryLevel" = "off";
       };
+      package = pkgs.vscode.fhs;
     };
   };
 
