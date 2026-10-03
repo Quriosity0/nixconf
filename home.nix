@@ -76,10 +76,6 @@
 
     vscode = {
       enable = true;
-      enterprisePolicies = {
-        "UpdateMode" = "none";
-        "TelemetryLevel" = "off";
-      };
       package = pkgs.vscode.fhs;
     };
   };
