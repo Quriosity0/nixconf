@@ -275,15 +275,11 @@
       substituters = [ "https://attic.xuyh0120.win/lantian" ];
       trusted-public-keys = [ "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=" ];
       experimental-features = [ "nix-command" "flakes" ];
-      nix-path = ''
-        if nix.channel.enable
-        then [
-          "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
-          "nixos-config=/home/quriosity/nixconf/configuration.nix"
-          "/nix/var/nix/profiles/per-user/root/channels"
-        ]
-        else [];
-      '';
+      nix-path = [
+        "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
+        "nixos-config=/home/quriosity/nixconf/configuration.nix"
+        "/nix/var/nix/profiles/per-user/root/channels"
+      ];
     };
   };
 
