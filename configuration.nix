@@ -271,7 +271,11 @@
   };
 
   nix = {
-    settings.experimental-features = [ "nix-command" "flakes" ];
+    settings = {
+      substituters = [ "https://attic.xuyh0120.win/lantian" ];
+      trusted-public-keys = [ "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=" ];
+      experimental-features = [ "nix-command" "flakes" ];
+    };
     nixPath = [
       "nixos-config=/home/quriosity/nixconf/configuration.nix"
       "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
