@@ -58,6 +58,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.extraSpecialArgs = { inherit inputs; };
+            home-manager.sharedModules = builtins.attrValues nur.legacyPackages.${system}.repos.quriosity.homeModules;
             home-manager.users.quriosity = import ./home.nix;
           }
         ];

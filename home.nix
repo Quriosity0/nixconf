@@ -79,6 +79,18 @@
       package = pkgs.vscode.fhs;
     };
   };
+  quriosity = {
+    programs = {
+      artcraft-suite = {
+        enable = true;
+        packages = [ "photocraft" "filmcraft" "pdfcraft" "wordcraft" "deckcraft" "gridcraft" ];
+        theme = "dark";
+        language = "english";
+        closeToTray = true;
+        autostart.enable = true;
+      };
+    };
+  };
 
   dconf = {
     enable = true;
