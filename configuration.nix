@@ -183,7 +183,7 @@
       echo = {
         enable = true;
         type = "pure";
-        login_mode = "select";
+        loginMode = "select";
       };
     };
   };
