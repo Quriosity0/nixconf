@@ -86,7 +86,7 @@
         enable = true;
         packages = [ "photocraft" "filmcraft" "pdfcraft" "wordcraft" "deckcraft" "gridcraft" ];
         theme = "dark";
-        language = "english";
+        language = "en";
         closeToTray = true;
         autostart.enable = true;
       };
