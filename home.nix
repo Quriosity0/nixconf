@@ -34,6 +34,7 @@
     nur.repos.trev.helium
     nur.repos.quriosity.zen-browser
     nur.repos.quriosity.BedrockNix
+    nur.repos.quriosity.openide
 
     transmission_4-gtk
     qt6Packages.qtstyleplugin-kvantum
