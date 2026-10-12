@@ -182,6 +182,8 @@
     sddm-themes = {
       echo = {
         enable = true;
+        type = "pure";
+        login_mode = "select";
       };
     };
   };
