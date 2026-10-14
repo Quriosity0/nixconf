@@ -3,7 +3,6 @@
 ![Lang](https://img.shields.io/github/languages/top/Quriosity0/nixconf)
 ![License](https://img.shields.io/github/license/Quriosity0/nixconf)
 ![Release](https://img.shields.io/github/v/release/Quriosity0/nixconf)
-![GH-CI](https://img.shields.io/github/actions/workflow/status/Quriosity0/nixconf/nix-ci.yml)
 
 My personal configuration files for **NixOS** Linux (system + Home manager, built with flakes)
 
