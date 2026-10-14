@@ -2,7 +2,7 @@
 
 ![Lang](https://img.shields.io/github/languages/top/Quriosity0/nixconf)
 ![License](https://img.shields.io/github/license/Quriosity0/nixconf)
-![Release](https://img.shields.io/github/v/release/Quriosity0/nixconf)
+![Release](https://img.shields.io/gitea/v/release/Quriosity/nixconf?gitea_url=https%3A%2F%2Fcodeberg.org)
 
 Personal **NixOS** configuration built with **flakes**. It covers the whole system (NixOS modules) and the user environment (Home Manager), for a single desktop machine named `asuspc`.
 
