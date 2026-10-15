@@ -277,12 +277,10 @@
       substituters = [ 
         "https://cache.nixos.org"
         "https://quriosity.cachix.org"
-        "https://attic.xuyh0120.win/lantian"
       ];
       trusted-public-keys = [
         "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
         "quriosity.cachix.org-1:wrsxWt1/K2VDRwjw8SEa25seSp8wryXAtPhea5gqR/w="
-        "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
       ];
       experimental-features = [ "nix-command" "flakes" ];
       nix-path = [
