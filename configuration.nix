@@ -125,8 +125,8 @@
         ];
       };
       extraCompatPackages = with pkgs; [
-        nur.repos.vladexa.proton-cachyos
-        proton-ge-bin
+        nur.repos.quriosity.proton-cachyos-v3
+        nur.repos.quriosity.proton-ge
       ];
     };
     appimage = {
