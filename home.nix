@@ -23,7 +23,6 @@
     sourcegit
     faugus-launcher
     vmware-workstation
-    materialgram
     hardinfo2
     vlc
     xnviewmp
@@ -35,6 +34,7 @@
     nur.repos.quriosity.zen-browser
     nur.repos.quriosity.BedrockNix
     nur.repos.quriosity.openide
+    nur.repos.quriosity.materialgram
 
     transmission_4-gtk
     qt6Packages.qtstyleplugin-kvantum
