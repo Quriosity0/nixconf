@@ -126,7 +126,7 @@
       };
       extraCompatPackages = with pkgs; [
         nur.repos.quriosity.proton-cachyos-v3
-        nur.repos.quriosity.proton-ge
+        nur.repos.quriosity.ge-proton
       ];
     };
     appimage = {
