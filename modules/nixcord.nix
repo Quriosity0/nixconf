@@ -62,9 +62,12 @@
         decor.enable = true;
         disableCallIdle.enable = true;
         disableDeepLinks.enable = true;
-        equicordHelper = {
+        equiTweaks = {
           enable = true;
           disableAdoptTagPrompt = true;
+          disableHolidayNotifications = true;
+          restoreFileDownloadButton = true;
+          showAllBadges = true;
         };
         experiments.enable = true;
         expressionCloner.enable = true;
@@ -235,12 +238,6 @@
           sameElseFormat = "ddd DD.MM.YYYY HH:mm:ss";
           cozyFormat = "[calendar]";
           tooltipFormat = "LLLL • [relative]";
-        };
-        equicordHelper = {
-          noDefaultHangStatus = false;
-          hideClanBadges = false;
-          disableCreateDMButton = true;
-          disableDMContextMenu = false;
         };
         gitHubRepos = {
           showInMiniProfile = true;
