@@ -12,8 +12,21 @@
   # ----------------------------------------- AND BASIC SETTINGS -------------------------------------------
   # --------------------------------------------------------------------------------------------------------
 
-  boot = {
-    kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-bore-lto-x86_64-v3;
+  boot = let
+    kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-bore-lto-x86_64-v3.extend (
+      _final: prev: {
+        vmware = prev.vmware.overrideAttrs (old: {
+          nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.buildPackages.kmodigest ];
+          postFixup = (old.postFixup or "") + ''
+            for module in $out/lib/modules/*/misc/*.ko; do
+              kmodigest "$module"
+            done
+          '';
+        });
+      }
+    );
+  in {
+    inherit kernelPackages;
     loader = {
       limine = {
         enable = true;
