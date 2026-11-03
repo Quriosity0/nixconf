@@ -28,7 +28,7 @@
     xnviewmp
     distrobox
     opencode
-    llama-cpp
+    unsloth-desktop
     uv
 
     nur.repos.trev.helium
