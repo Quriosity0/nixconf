@@ -28,11 +28,14 @@
     xnviewmp
     distrobox
     opencode
+    llama-cpp
     uv
 
     nur.repos.trev.helium
     nur.repos.quriosity.zen-browser
-    nur.repos.quriosity.BedrockNix
+    nur.repos.quriosity.bol
+    nur.repos.quriosity.cinnabar
+    nur.repos.quriosity.horizon
     nur.repos.quriosity.openide
     nur.repos.quriosity.materialgram
 
