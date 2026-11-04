@@ -70,7 +70,7 @@
           showAllBadges = true;
         };
         experiments.enable = true;
-        expressionCloner.enable = true;
+        expressionManager.enable = true;
         f8Break.enable = true;
         fakeNitro.enable = true;
         fastDeleteChannels.enable = true;
