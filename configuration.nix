@@ -183,11 +183,14 @@
       viAlias = true;
       vimAlias = true;
     };
+    throne = {
+      enable = true;
+      tunMode.enable = true;
+    };
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
     };
-    amnezia-vpn.enable = true;
     mtr.enable = true;
   };
 
