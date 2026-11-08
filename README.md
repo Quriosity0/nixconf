@@ -13,11 +13,12 @@ Personal **NixOS** configuration built with **flakes**. It covers the whole syst
 | Area | What is used |
 | --- | --- |
 | Base system | NixOS `nixos-unstable`, `system.stateVersion = "25.11"`, `x86_64-linux` |
-| Flake inputs | `nixpkgs`, `home-manager`, `NUR`, `nixcord`, `spicetify-nix`, `proxy-suite`, `Millennium`, `nix-cachyos-kernel` |
+| Flake inputs | `nixpkgs`, `home-manager`, `NUR`, `iNiR`, `nixcord`, `spicetify-nix`, `proxy-suite`, `Millennium`, `nix-cachyos-kernel` |
 | Bootloader | Limine (EFI, removable install), max 10 generations |
 | Kernel | CachyOS kernel, `linuxPackages-cachyos-latest-x86_64-v3` |
 | Hardware | Intel CPU (`kvm-intel`), NVIDIA GPU (open kernel module, modesetting, `nvidia-container-toolkit`), Razer peripherals (`openrazer`) |
-| Desktop | GNOME with a curated set of extensions, SDDM display manager (Wayland, custom `echo` theme) |
+| Desktop | GNOME with a curated set of extensions and iNiR/Niri as an optional session; SDDM display manager (Wayland, custom `echo` theme) |
+| iNiR | iNiR NixOS module, iRiS family plugin pinned from the official Hub, and Hub CLI built from pinned `snowarch/inir-cli` source |
 | Shell | zsh + oh-my-zsh (`ys` theme, `web-search`, `z`, `sudo`, `gpg-agent`) |
 | Editors | Neovim (`vi`/`vim` aliases), VS Code (FHS build), OpenIDE, OpenCode |
 | Gaming | Steam (with Millennium, Proton-CachyOS, Proton-GE, Protontricks), Prism Launcher, Faugus Launcher |
@@ -48,7 +49,7 @@ nixconf/
 Defines one NixOS system, `nixosConfigurations."asuspc"`. It:
 
 - adds the CachyOS kernel overlay, the Millennium overlay and the NUR overlay;
-- imports the `proxy-suite` NixOS module and the NUR modules from the `quriosity` repo;
+- imports the iNiR and `proxy-suite` NixOS modules and the NUR modules from the `quriosity` repo;
 - loads `configuration.nix` and `modules/proxy-suite.nix`;
 - integrates Home Manager as a NixOS module (`useGlobalPkgs`, `useUserPackages`), with `home.nix` for user `quriosity` and NUR Home Manager modules as shared modules.
 
@@ -63,6 +64,7 @@ System settings:
 - **Packages:** `wget`, `curl`, `git`, `fastfetch`, `btop`, `gnupg`, `gdu`, `podman-compose`, `podman-tui`, `flameshot`, `zenity`, `tabby` (from NUR).
 - **Programs:**
   - Steam with Remote Play and dedicated-server firewall rules opened, Millennium integrated, extra compatibility tools (`proton-cachyos` from NUR, `proton-ge-bin`);
+  - iNiR and its Niri desktop session, alongside GNOME;
   - AppImage support with binfmt, `nix-ld`, `mtr`, `amnezia-vpn`;
   - zsh with completion, autosuggestions, syntax highlighting, and aliases (see below);
   - Neovim, GnuPG agent with SSH support.
@@ -108,16 +110,26 @@ User-level configuration:
 
 ## Installation
 
+The flake includes iNiR's NixOS module and enables `programs.inir.desktop`. It builds the Hub-capable `inir` CLI from the pinned `snowarch/inir-cli` input and packages the iRiS family into a Nix-managed runtime using the Hub archive's pinned hash. This provides iNiR, Niri, and the Niri session; it does not replace GNOME. Do not run iNiR's generic `./setup install` script on this NixOS setup. NixOS support in iNiR is experimental.
+
 ```bash
 git clone https://github.com/Quriosity0/nixconf.git ~/nixconf
-sudo nix-channel --add https://channels.nixos.org/nixos-unstable nixos
-sudo nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-sudo nix-channel --update
-NIXPKGS_ALLOW_UNFREE=1 sudo nixos-rebuild switch --flake ~/nixconf#asuspc
+sudo nixos-rebuild switch --flake ~/nixconf#asuspc
 sudo reboot
 ```
 
 Replace `hardware-configuration.nix` with the output of `nixos-generate-config` for your machine before the first build. The file in this repository belongs to the `asuspc` hardware.
+
+After rebooting, choose the **Niri** session in SDDM to start iNiR. GNOME remains available as another session. For an existing Niri session, apply the configuration and select the pinned iRiS family:
+
+```bash
+sudo nixos-rebuild switch --flake ~/nixconf#asuspc
+systemctl --user restart inir.service
+inir panelFamily set iris
+inir welcome
+```
+
+The iRiS family is immutable in the Nix store; update its pinned Hub archive and hash in `flake.nix` rather than running `inir hub install iris`, which cannot write into the Nix store. Home Manager also points `~/.local/bin/inir` at the Nix package so an older setup-generated link cannot shadow it.
 
 ## Updating
 
@@ -125,6 +137,14 @@ After the first install, the `update` alias rebuilds the system and Home Manager
 
 ```bash
 update
+```
+
+To update only iNiR:
+
+```bash
+cd ~/nixconf
+nix flake update inir
+sudo nixos-rebuild switch --flake ~/nixconf#asuspc
 ```
 
 To update the config to the latest commit:
