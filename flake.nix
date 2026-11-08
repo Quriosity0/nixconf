@@ -12,6 +12,10 @@
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    inir = {
+      url = "github:snowarch/inir";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     proxy-suite = {
       url = "github:FUFSoB/proxy-suite-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -32,7 +36,7 @@
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
   };
 
-  outputs = inputs@{ nixpkgs, home-manager, nur, proxy-suite, nixcord, millennium, nix-cachyos-kernel, ... }:
+  outputs = inputs@{ nixpkgs, home-manager, nur, inir, proxy-suite, nixcord, millennium, nix-cachyos-kernel, ... }:
     let
       system = "x86_64-linux";
     in
@@ -49,6 +53,7 @@
 
           { nixpkgs.overlays = [ millennium.overlays.default nur.overlays.default ]; }
           proxy-suite.nixosModules.default
+          inir.nixosModules.default
           { imports = builtins.attrValues nur.legacyPackages.${system}.repos.quriosity.nixosModules; }
           ./configuration.nix
           ./modules/proxy-suite.nix
