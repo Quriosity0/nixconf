@@ -142,6 +142,10 @@
         nur.repos.quriosity.ge-proton
       ];
     };
+    inir = {
+      enable = true;
+      desktop.enable = true;
+    };
     appimage = {
       enable = true;
       binfmt = true;
