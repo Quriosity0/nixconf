@@ -23,8 +23,7 @@
     sourcegit
     faugus-launcher
     vmware-workstation
-    hardinfo2
-    vlc
+    mpv
     xnviewmp
     distrobox
     opencode
