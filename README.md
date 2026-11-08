@@ -110,7 +110,7 @@ User-level configuration:
 
 ## Installation
 
-The flake includes iNiR's NixOS module and enables `programs.inir.desktop`. It builds the Hub-capable `inir` CLI from the pinned `snowarch/inir-cli` input and packages the iRiS family into a Nix-managed runtime using the Hub archive's pinned hash. This provides iNiR, Niri, and the Niri session; it does not replace GNOME. Do not run iNiR's generic `./setup install` script on this NixOS setup. NixOS support in iNiR is experimental.
+The flake includes iNiR's NixOS module and enables `programs.inir.desktop`. It builds the Hub-capable `inir` CLI from the pinned `snowarch/inir-cli` input and uses `modules/inir-families.nix` to package the requested family plugins into a Nix-managed runtime. The default configuration selects iRiS. This provides iNiR, Niri, and the Niri session; it does not replace GNOME. Do not run iNiR's generic `./setup install` script on this NixOS setup. NixOS support in iNiR is experimental.
 
 ```bash
 git clone https://github.com/Quriosity0/nixconf.git ~/nixconf
@@ -120,16 +120,13 @@ sudo reboot
 
 Replace `hardware-configuration.nix` with the output of `nixos-generate-config` for your machine before the first build. The file in this repository belongs to the `asuspc` hardware.
 
-After rebooting, choose the **Niri** session in SDDM to start iNiR. GNOME remains available as another session. For an existing Niri session, apply the configuration and select the pinned iRiS family:
+After rebooting, choose the **Niri** session in SDDM to start iNiR. GNOME remains available as another session. Choose any combination of supported families in `configuration.nix`:
 
 ```bash
-sudo nixos-rebuild switch --flake ~/nixconf#asuspc
-systemctl --user restart inir.service
-inir panelFamily set iris
-inir welcome
+programs.inir.families = [ "ii" "waffle" "iris" ];
 ```
 
-The iRiS family is immutable in the Nix store; update its pinned Hub archive and hash in `flake.nix` rather than running `inir hub install iris`, which cannot write into the Nix store. Home Manager also points `~/.local/bin/inir` at the Nix package so an older setup-generated link cannot shadow it.
+The IDs are `ii` (Material), `waffle`, and `iris` (iRiS). Waffle requires Material, so selecting Waffle automatically includes `ii`. Rebuild after changing the list; all included families can then be selected from iNiR's UI. The family archives and hashes are pinned in `flake.nix`; update those there instead of running `inir hub install`, which cannot write into the Nix store. Home Manager points `~/.local/bin/inir` at the selected Nix package so an older setup-generated link cannot shadow it.
 
 ## Updating
 

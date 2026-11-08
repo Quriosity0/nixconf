@@ -145,7 +145,7 @@
     inir = {
       enable = true;
       desktop.enable = true;
-      package = pkgs.inir-with-iris;
+      families = [ "iris" ];
       extraPackages = with pkgs; [
         libsecret
         swayidle
@@ -235,6 +235,9 @@
       freetype
       fontconfig
       dejavu_fonts
+      (google-fonts.override {
+        fonts = [ "MontserratAlternates" ];
+      })
     ];
   };
 

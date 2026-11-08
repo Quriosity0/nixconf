@@ -79,17 +79,47 @@
                   };
                 };
 
-                inir-with-iris =
+                inirWithFamilies = selectedFamilies:
                   let
                     base = inputs.inir.packages.${system}.inir;
-                    iris = final.fetchurl {
-                      url = "https://inir.space/hub/packages/iris-2.33.62.tar.gz";
-                      hash = "sha256-Qu/5amIB0qbiIWkP47a81uWsq8Z3VgHbGCe//SxApuc=";
+                    familyInfo = {
+                      ii = {
+                        version = "2.35.6";
+                        hash = "sha256-cGYz5wOI53R1U1b34X7aPCAuSJEUWXgoANOWt4dsC6A=";
+                      };
+                      waffle = {
+                        version = "2.34.8";
+                        hash = "sha256-Gb5xa0kP3x593cISwyJxIOguafR9X0waHj1YrFff1fk=";
+                        requires = [ "ii" ];
+                      };
+                      iris = {
+                        version = "2.33.62";
+                        hash = "sha256-Qu/5amIB0qbiIWkP47a81uWsq8Z3VgHbGCe//SxApuc=";
+                      };
                     };
+                    requested = final.lib.unique selectedFamilies;
+                    families = final.lib.unique (
+                      final.lib.concatMap (family:
+                        (familyInfo.${family}.requires or [ ]) ++ [ family ]
+                      ) requested
+                    );
+                    archives = final.lib.genAttrs families (family:
+                      final.fetchurl {
+                        url = "https://inir.space/hub/packages/${family}-${familyInfo.${family}.version}.tar.gz";
+                        inherit (familyInfo.${family}) hash;
+                      }
+                    );
+                    installFamily = family: ''
+                      mkdir -p "$runtime/modules/${family}"
+                      tar -xzf "${archives.${family}}" -C "$runtime/modules/${family}"
+                      find "$runtime/modules/${family}" \
+                        -type f \( -name '*.qml' -o -name '*.js' -o -name '*.sh' -o -name '*.py' \) \
+                        -exec sed -i '1!s#/usr/bin/##g' {} +
+                    '';
                   in
                   final.stdenvNoCC.mkDerivation {
-                    pname = "inir-with-iris";
-                    version = "3.0.1-iris-2.33.62";
+                    pname = "inir-with-families";
+                    version = "${base.version}-${final.lib.concatStringsSep "-" (map (family: "${family}-${familyInfo.${family}.version}") families)}";
                     dontUnpack = true;
                     nativeBuildInputs = [ final.gnutar final.gzip final.gnused final.makeWrapper ];
                     installPhase = ''
@@ -97,23 +127,18 @@
                       mkdir -p "$runtime" "$out/bin"
                       cp -a ${base}/share/quickshell/inir/. "$runtime/"
                       chmod u+w "$runtime" "$runtime/modules"
-                      mkdir -p "$runtime/modules/iris"
-                      chmod u+w "$runtime/modules/iris"
-                      tar -xzf ${iris} -C "$runtime/modules/iris"
+                      ${final.lib.concatMapStringsSep "\n" installFamily families}
                       if [ -e "$runtime/plugins.list" ]; then
                         chmod u+w "$runtime/plugins.list"
                       fi
-                      printf '%s\n' iris > "$runtime/plugins.list"
-                      find "$runtime/modules/iris" \
-                        -type f \( -name '*.qml' -o -name '*.js' -o -name '*.sh' -o -name '*.py' \) \
-                        -exec sed -i '1!s#/usr/bin/##g' {} +
+                      printf '%s\n' '${final.lib.concatStringsSep "\n" families}' > "$runtime/plugins.list"
                       makeWrapper ${base}/bin/inir "$out/bin/inir" \
                         --set INIR_SYSTEM_RUNTIME_DIR "$runtime" \
                         --set INIR_FALLBACK_SYSTEM_RUNTIME_DIR "$runtime" \
                         --prefix PATH : "${final.lib.makeBinPath [ final.libsecret final.swayidle ]}"
                     '';
                     meta = {
-                      description = "iNiR with the iRiS family";
+                      description = "iNiR with selected desktop families";
                       homepage = "https://inir.space/";
                       license = final.lib.licenses.gpl3Only;
                       mainProgram = "inir";
@@ -125,18 +150,25 @@
           }
           proxy-suite.nixosModules.default
           inir.nixosModules.default
+          ./modules/inir-families.nix
           { imports = builtins.attrValues nur.legacyPackages.${system}.repos.quriosity.nixosModules; }
           ./configuration.nix
           ./modules/proxy-suite.nix
 
           home-manager.nixosModules.home-manager
-          {
+          ({ config, ... }: {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.extraSpecialArgs = { inherit inputs; };
             home-manager.sharedModules = builtins.attrValues nur.legacyPackages.${system}.repos.quriosity.homeModules;
-            home-manager.users.quriosity = import ./home.nix;
-          }
+            home-manager.users.quriosity = {
+              imports = [ (import ./home.nix) ];
+              home.file.".local/bin/inir" = {
+                source = "${config.programs.inir.package}/bin/inir";
+                force = true;
+              };
+            };
+          })
         ];
       };
     };

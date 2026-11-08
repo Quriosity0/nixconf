@@ -89,10 +89,6 @@
     NIX_PATH="nixos-config=/home/quriosity/nixconf/configuration.nix";
   };
 
-  home.file.".local/bin/inir" = {
-    source = "${pkgs.inir-with-iris}/bin/inir";
-    force = true;
-  };
   home.file.".local/share/inir/cli/inir".source = "${pkgs.inir-cli}/bin/inir";
 
   home = {
