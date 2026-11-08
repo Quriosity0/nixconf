@@ -171,7 +171,7 @@ Defined in `configuration.nix` (`programs.zsh.shellAliases`):
 
 | Alias | Command |
 | --- | --- |
-| `update` | `sudo nixos-rebuild switch --flake ~/nixconf#asuspc` |
+| `update` | `sudo nixos-rebuild boot --flake ~/nixconf#asuspc` |
 | `flpull` | `nix flake update` |
 | `flchk` | `nix flake check` |
 | `clean-gens` | `sudo nix-collect-garbage -d && nix-collect-garbage -d` |

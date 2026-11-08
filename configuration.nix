@@ -178,7 +178,7 @@
         cls = "clear";
         flpull = "nix flake update";
         flchk = "nix flake check";
-        update = "sudo nixos-rebuild switch --flake ~/nixconf#asuspc";
+        update = "sudo nixos-rebuild boot --flake ~/nixconf#asuspc";
         clean-gens = "sudo nix-collect-garbage -d && nix-collect-garbage -d";
       };
       histSize = 10000;
