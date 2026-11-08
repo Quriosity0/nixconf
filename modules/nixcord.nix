@@ -155,7 +155,6 @@
         };
         pinIcon.enable = true;
         platformIndicators.enable = true;
-        platformSpoofer.enable = true;
         previewMessage.enable = true;
         quickMention.enable = true;
         relationshipNotifier.enable = true;
