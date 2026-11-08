@@ -138,6 +138,22 @@
         "type": "github"
       }
     },
+    "inir-cli": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1794088898,
+        "narHash": "sha256-OyVgtrnJRz2xHGUnaAkgVUb2GAkBsSaEUYK6xpP+Wus=",
+        "owner": "snowarch",
+        "repo": "inir-cli",
+        "rev": "d2abed2fb72aeea6d1561f6344c68a564c141370",
+        "type": "github"
+      },
+      "original": {
+        "owner": "snowarch",
+        "repo": "inir-cli",
+        "type": "github"
+      }
+    },
     "millennium": {
       "inputs": {
         "millennium-src": "millennium-src",
@@ -401,6 +417,7 @@
       "inputs": {
         "home-manager": "home-manager",
         "inir": "inir",
+        "inir-cli": "inir-cli",
         "millennium": "millennium",
         "nix-cachyos-kernel": "nix-cachyos-kernel",
         "nixcord": "nixcord",

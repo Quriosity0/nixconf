@@ -16,6 +16,10 @@
       url = "github:snowarch/inir";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    inir-cli = {
+      url = "github:snowarch/inir-cli";
+      flake = false;
+    };
     proxy-suite = {
       url = "github:FUFSoB/proxy-suite-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -51,7 +55,74 @@
             ];
           })
 
-          { nixpkgs.overlays = [ millennium.overlays.default nur.overlays.default ]; }
+          {
+            nixpkgs.overlays = [
+              millennium.overlays.default
+              nur.overlays.default
+              (final: _prev: {
+                inir-cli = final.buildGoModule {
+                  pname = "inir-cli";
+                  version = "unstable-${inputs.inir-cli.shortRev}";
+                  src = inputs.inir-cli;
+                  vendorHash = "sha256-/S6D3nbvOq3z7Hakc8WdXQGAhRSZkujX2dBTFD0bUMI=";
+                  subPackages = [ "cmd/inir" ];
+                  ldflags = [
+                    "-X github.com/snowarch/inir-cli/internal/buildinfo.Version=unstable-${inputs.inir-cli.shortRev}"
+                    "-X github.com/snowarch/inir-cli/internal/buildinfo.Commit=${inputs.inir-cli.shortRev}"
+                  ];
+                  meta = {
+                    description = "Command-line interface for iNiR";
+                    homepage = "https://github.com/snowarch/inir-cli";
+                    license = final.lib.licenses.gpl3Only;
+                    mainProgram = "inir";
+                    platforms = final.lib.platforms.linux;
+                  };
+                };
+
+                inir-with-iris =
+                  let
+                    base = inputs.inir.packages.${system}.inir;
+                    iris = final.fetchurl {
+                      url = "https://inir.space/hub/packages/iris-2.33.62.tar.gz";
+                      hash = "sha256-Qu/5amIB0qbiIWkP47a81uWsq8Z3VgHbGCe//SxApuc=";
+                    };
+                  in
+                  final.stdenvNoCC.mkDerivation {
+                    pname = "inir-with-iris";
+                    version = "3.0.1-iris-2.33.62";
+                    dontUnpack = true;
+                    nativeBuildInputs = [ final.gnutar final.gzip final.gnused final.makeWrapper ];
+                    installPhase = ''
+                      runtime="$out/share/quickshell/inir"
+                      mkdir -p "$runtime" "$out/bin"
+                      cp -a ${base}/share/quickshell/inir/. "$runtime/"
+                      chmod u+w "$runtime" "$runtime/modules"
+                      mkdir -p "$runtime/modules/iris"
+                      chmod u+w "$runtime/modules/iris"
+                      tar -xzf ${iris} -C "$runtime/modules/iris"
+                      if [ -e "$runtime/plugins.list" ]; then
+                        chmod u+w "$runtime/plugins.list"
+                      fi
+                      printf '%s\n' iris > "$runtime/plugins.list"
+                      find "$runtime/modules/iris" \
+                        -type f \( -name '*.qml' -o -name '*.js' -o -name '*.sh' -o -name '*.py' \) \
+                        -exec sed -i '1!s#/usr/bin/##g' {} +
+                      makeWrapper ${base}/bin/inir "$out/bin/inir" \
+                        --set INIR_SYSTEM_RUNTIME_DIR "$runtime" \
+                        --set INIR_FALLBACK_SYSTEM_RUNTIME_DIR "$runtime" \
+                        --prefix PATH : "${final.lib.makeBinPath [ final.libsecret final.swayidle ]}"
+                    '';
+                    meta = {
+                      description = "iNiR with the iRiS family";
+                      homepage = "https://inir.space/";
+                      license = final.lib.licenses.gpl3Only;
+                      mainProgram = "inir";
+                      platforms = final.lib.platforms.linux;
+                    };
+                  };
+              })
+            ];
+          }
           proxy-suite.nixosModules.default
           inir.nixosModules.default
           { imports = builtins.attrValues nur.legacyPackages.${system}.repos.quriosity.nixosModules; }

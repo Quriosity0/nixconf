@@ -145,6 +145,11 @@
     inir = {
       enable = true;
       desktop.enable = true;
+      package = pkgs.inir-with-iris;
+      extraPackages = with pkgs; [
+        libsecret
+        swayidle
+      ];
     };
     appimage = {
       enable = true;
