@@ -30,6 +30,7 @@
     opencode
     unsloth-desktop
     uv
+    transmission_4-qt
 
     nur.repos.trev.helium
     nur.repos.quriosity.zen-browser
@@ -38,22 +39,6 @@
     nur.repos.quriosity.horizon
     nur.repos.quriosity.openide
     nur.repos.quriosity.materialgram
-
-    transmission_4-gtk
-    qt6Packages.qtstyleplugin-kvantum
-
-    gnome-tweaks
-    refine
-    gnomeExtensions.blur-my-shell
-    gnomeExtensions.dash2dock-lite
-    gnomeExtensions.just-perfection
-    gnomeExtensions.clipboard-indicator
-    gnomeExtensions.app-hider
-    gnomeExtensions.rounded-window-corners-reborn
-    gnomeExtensions.caffeine
-    gnomeExtensions.tiling-shell
-    gnomeExtensions.status-tray
-    gnomeExtensions.user-themes
   ];
 
   # OBS
@@ -91,26 +76,6 @@
         language = "en";
         closeToTray = true;
         autostart.enable = true;
-      };
-    };
-  };
-
-  dconf = {
-    enable = true;
-    settings = {
-      "org/gnome/shell" = {
-        enabled-extensions = [
-          pkgs.gnomeExtensions.blur-my-shell.extensionUuid
-          pkgs.gnomeExtensions.dash2dock-lite.extensionUuid
-          pkgs.gnomeExtensions.just-perfection.extensionUuid
-          pkgs.gnomeExtensions.clipboard-indicator.extensionUuid
-          pkgs.gnomeExtensions.app-hider.extensionUuid
-          pkgs.gnomeExtensions.rounded-window-corners-reborn.extensionUuid
-          pkgs.gnomeExtensions.caffeine.extensionUuid
-          pkgs.gnomeExtensions.tiling-shell.extensionUuid
-          pkgs.gnomeExtensions.status-tray.extensionUuid
-          pkgs.gnomeExtensions.user-themes.extensionUuid
-        ];
       };
     };
   };

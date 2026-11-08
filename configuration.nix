@@ -230,34 +230,8 @@
       freetype
       fontconfig
       dejavu_fonts
-      nerd-fonts.jetbrains-mono
-      nerd-fonts.ubuntu-mono
-      (google-fonts.override {
-        fonts = [ "MontserratAlternates" ];
-      })
     ];
   };
-
-  # exclude kde apps
-  environment.gnome.excludePackages = with pkgs; [
-    gnome-tour
-    gnome-user-docs
-    gnome-calendar
-    gnome-characters
-    gnome-contacts
-    gnome-font-viewer
-    gnome-maps
-    gnome-music
-    gnome-system-monitor
-    gnome-weather
-    loupe
-    showtime
-    simple-scan
-    yelp
-    snapshot
-    decibels
-    epiphany
-  ];
 
   # --------------------------------------------------------------------------------------------------------
   # -------------------------------------------- SERVICES --------------------------------------------------
@@ -283,11 +257,6 @@
             qt5compat
           ]);
       };
-    };
-    desktopManager.gnome.enable = true;
-    gnome = {
-      core-developer-tools.enable = false;
-      games.enable = false;
     };
     flatpak.enable = true;
   };
