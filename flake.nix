@@ -135,6 +135,7 @@
                       makeWrapper ${base}/bin/inir "$out/bin/inir" \
                         --set INIR_SYSTEM_RUNTIME_DIR "$runtime" \
                         --set INIR_FALLBACK_SYSTEM_RUNTIME_DIR "$runtime" \
+                        --set INIR_QS_BIN "${final.quickshell}/bin/quickshell" \
                         --prefix PATH : "${final.lib.makeBinPath [ final.libsecret final.swayidle ]}"
                     '';
                     meta = {
