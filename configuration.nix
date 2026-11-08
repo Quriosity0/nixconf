@@ -120,7 +120,6 @@
     podman-compose
     podman-tui
 
-    flameshot
     zenity
     nur.repos.quriosity.tabby
   ];

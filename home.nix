@@ -31,6 +31,7 @@
     unsloth-desktop
     uv
     transmission_4-qt
+    nautilus
 
     nur.repos.trev.helium
     nur.repos.quriosity.zen-browser
