@@ -17,8 +17,7 @@ Personal **NixOS** configuration built with **flakes**. It covers the whole syst
 | Bootloader | Limine (EFI, removable install), max 10 generations |
 | Kernel | CachyOS kernel, `linuxPackages-cachyos-latest-x86_64-v3` |
 | Hardware | Intel CPU (`kvm-intel`), NVIDIA GPU (open kernel module, modesetting, `nvidia-container-toolkit`), Razer peripherals (`openrazer`) |
-| Desktop | GNOME with a curated set of extensions and iNiR/Niri as an optional session; SDDM display manager (Wayland, custom `echo` theme) |
-| iNiR | iNiR NixOS module, iRiS family plugin pinned from the official Hub, and Hub CLI built from pinned `snowarch/inir-cli` source |
+| iNiR | iNiR NixOS module, iRiS, Waffle and Illogical Impulse downloading through the official Hub CLI, and Hub CLI built from pinned `snowarch/inir-cli` source |
 | Shell | zsh + oh-my-zsh (`ys` theme, `web-search`, `z`, `sudo`, `gpg-agent`) |
 | Editors | Neovim (`vi`/`vim` aliases), VS Code (FHS build), OpenIDE, OpenCode |
 | Gaming | Steam (with Millennium, Proton-CachyOS, Proton-GE, Protontricks), Prism Launcher, Faugus Launcher |
@@ -39,6 +38,7 @@ nixconf/
 ├── modules/
 │   ├── default.nix        # Home Manager module index (imports the modules below)
 │   ├── nixcord.nix        # Discord client (Equicord) with plugins and QuickCSS
+│   ├── inir-families.nix  # INIR module adds support for all INIR families
 │   ├── spicetify.nix      # Spotify client customization (theme, extensions, snippets)
 │   └── proxy-suite.nix    # zapret DPI bypass, tg-ws-proxy, proxy-suite GUI
 └── LICENSE                # GPL-3.0
@@ -63,12 +63,12 @@ System settings:
 - **Hardware:** NVIDIA open driver (`nvidiaPackages.latest`), power management disabled, `nvidia-settings` disabled; `openrazer` for user `quriosity`.
 - **Packages:** `wget`, `curl`, `git`, `fastfetch`, `btop`, `gnupg`, `gdu`, `podman-compose`, `podman-tui`, `flameshot`, `zenity`, `tabby` (from NUR).
 - **Programs:**
-  - Steam with Remote Play and dedicated-server firewall rules opened, Millennium integrated, extra compatibility tools (`proton-cachyos` from NUR, `proton-ge-bin`);
-  - iNiR and its Niri desktop session, alongside GNOME;
+  - Steam with Remote Play and dedicated-server firewall rules opened, Millennium integrated, extra compatibility tools (`proton-cachyos` and `proton-ge-bin` from NUR);
+  - iNiR and its Niri desktop session
   - AppImage support with binfmt, `nix-ld`, `mtr`, `amnezia-vpn`;
   - zsh with completion, autosuggestions, syntax highlighting, and aliases (see below);
   - Neovim, GnuPG agent with SSH support.
-- **Desktop:** SDDM (Wayland, `echo` theme from the `quriosity.sddm-themes` option), GNOME, Flatpak, the X keyboard layout `us`, the `nvidia` video driver, and a set of GNOME apps excluded from the install.
+- **Desktop:** SDDM (Wayland, `echo` theme from the `quriosity.sddm-themes` option), Flatpak, the X keyboard layout `us`, and the `nvidia` video driver.
 - **Virtualisation:** Podman with DNS enabled, the container stack, and the VMware Workstation host module.
 - **Fonts:** DejaVu, JetBrains Mono Nerd Font, Ubuntu Mono Nerd Font, Montserrat Alternates.
 - **Nix:** extra substituter `attic.xuyh0120.win/lantian` (for CachyOS kernel binaries), flakes enabled, `nix-path` pointing to the channel and to this `configuration.nix`.
@@ -82,7 +82,6 @@ User-level configuration:
 - **OBS Studio:** built with CUDA and the plugins background removal, PipeWire audio capture, VA-API, GStreamer, Vulkan capture, input overlay, multi-RTMP, and LiveSplit One.
 - **VS Code:** the FHS build (`vscode.fhs`).
 - **Artcraft Suite:** `photocraft`, `filmcraft`, `pdfcraft`, `wordcraft`, `deckcraft`, `gridcraft`; dark theme, English, close-to-tray, autostart.
-- **GNOME:** `gnome-tweaks`, `refine`, and extensions: Blur my Shell, Dash2Dock Lite, Just Perfection, Clipboard Indicator, App Hider, Rounded Window Corners Reborn, Caffeine, Tiling Shell, Status Tray, User Themes. They are enabled through `dconf`.
 - **Session variables:** `NIXPKGS_ALLOW_UNFREE=1`, `NIX_PATH` pointing to `configuration.nix`.
 
 ### `modules/`

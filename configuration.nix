@@ -145,7 +145,7 @@
     inir = {
       enable = true;
       desktop.enable = true;
-      families = [ "iris" ];
+      families = [ "iris" "waffle" "ii" ];
       extraPackages = with pkgs; [
         libsecret
         swayidle
