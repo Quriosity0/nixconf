@@ -111,21 +111,22 @@ User-level configuration:
 
 The flake includes iNiR's NixOS module and enables `programs.inir.desktop`. It builds the Hub-capable `inir` CLI from the pinned `snowarch/inir-cli` input and uses `modules/inir-families.nix` to package the requested family plugins into a Nix-managed runtime. The default configuration selects iRiS. This provides iNiR, Niri, and the Niri session; it does not replace GNOME. Do not run iNiR's generic `./setup install` script on this NixOS setup. NixOS support in iNiR is experimental.
 
+Replace `hardware-configuration.nix` with the output of `nixos-generate-config` for your machine before the first build. The file in this repository belongs to the `asuspc` hardware.
+
 ```bash
 git clone https://github.com/Quriosity0/nixconf.git ~/nixconf
-sudo nixos-rebuild switch --flake ~/nixconf#asuspc
+sudo nix-channel --add https://channels.nixos.org/nixos-unstable nixos
+sudo nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+sudo nix-channel --update
+NIXPKGS_ALLOW_UNFREE=1 sudo nixos-rebuild boot --flake ~/nixconf#asuspc
 sudo reboot
 ```
 
-Replace `hardware-configuration.nix` with the output of `nixos-generate-config` for your machine before the first build. The file in this repository belongs to the `asuspc` hardware.
-
-After rebooting, choose the **Niri** session in SDDM to start iNiR. GNOME remains available as another session. Choose any combination of supported families in `configuration.nix`:
+After rebooting, choose the **Niri** session in SDDM to start iNiR. Choose any combination of supported families in `configuration.nix`:
 
 ```bash
 programs.inir.families = [ "ii" "waffle" "iris" ];
 ```
-
-The IDs are `ii` (Material), `waffle`, and `iris` (iRiS). Waffle requires Material, so selecting Waffle automatically includes `ii`. Rebuild after changing the list; all included families can then be selected from iNiR's UI. The family archives and hashes are pinned in `flake.nix`; update those there instead of running `inir hub install`, which cannot write into the Nix store. Home Manager points `~/.local/bin/inir` at the selected Nix package so an older setup-generated link cannot shadow it.
 
 ## Updating
 
