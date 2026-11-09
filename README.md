@@ -88,6 +88,7 @@ User-level configuration:
 
 - **`nixcord.nix`:** Equicord for Discord with a large plugin set (message logger, call timers, custom timestamps, Vencord RPC, and others) and a custom QuickCSS.
 - **`spicetify.nix`:** Spotify with the `bloom` theme in dark mode, extensions (Full App Display, Shuffle, Adblock, Volume Percentage, Beautiful Lyrics, Sidebar Customizer), many UI snippets, and custom apps (Marketplace, Lyrics Plus, Wavelink).
+- **`inir-families.nix`:** INIR desktop families module, that installs chosen desktop families
 - **`proxy-suite.nix`:**
   - **zapret (`zapret-discord-youtube` engine, config `general(ALT)`):** a DPI bypass for a list of domains (Discord, YouTube, Spotify, GitHub, Steam, Telegram, and others), with an exclusion list for domestic services and private IP ranges;
   - **tg-ws-proxy:** a local Telegram MTProto WebSocket proxy listening on `127.0.0.1:1080`;
