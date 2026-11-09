@@ -31,6 +31,8 @@
     uv
     transmission_4-qt
     nautilus
+    xwayland-satellite
+    qt6Packages.qtstyleplugin-kvantum
 
     nur.repos.trev.helium
     nur.repos.quriosity.zen-browser
@@ -43,25 +45,6 @@
 
   # OBS
   programs = {
-    obs-studio = {
-      enable = true;
-      package = (
-        pkgs.obs-studio.override {
-          cudaSupport = true;
-        }
-      );
-      plugins = with pkgs.obs-studio-plugins; [
-        obs-backgroundremoval
-        obs-pipewire-audio-capture
-        obs-vaapi
-        obs-gstreamer
-        obs-vkcapture
-        input-overlay
-        obs-multi-rtmp
-        obs-livesplit-one
-      ];
-    };
-
     vscode = {
       enable = true;
       package = pkgs.vscode.fhs;
