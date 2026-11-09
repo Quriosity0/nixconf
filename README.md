@@ -13,11 +13,11 @@ Personal **NixOS** configuration built with **flakes**. It covers the whole syst
 | Area | What is used |
 | --- | --- |
 | Base system | NixOS `nixos-unstable`, `system.stateVersion = "25.11"`, `x86_64-linux` |
-| Flake inputs | `nixpkgs`, `home-manager`, `NUR`, `iNiR`, `nixcord`, `spicetify-nix`, `proxy-suite`, `Millennium`, `nix-cachyos-kernel` |
+| Flake inputs | `nixpkgs`, `home-manager`, `NUR`, `iNiR`, `iNiR Hub`, `iNiR CLI`, `nixcord`, `spicetify-nix`, `proxy-suite`, `Millennium`, `nix-cachyos-kernel` |
 | Bootloader | Limine (EFI, removable install), max 10 generations |
 | Kernel | CachyOS kernel, `linuxPackages-cachyos-latest-x86_64-v3` |
 | Hardware | Intel CPU (`kvm-intel`), NVIDIA GPU (open kernel module, modesetting, `nvidia-container-toolkit`), Razer peripherals (`openrazer`) |
-| iNiR | iNiR NixOS module, iRiS, Waffle and Illogical Impulse downloading through the official Hub CLI, and Hub CLI built from pinned `snowarch/inir-cli` source |
+| iNiR | iNiR NixOS module, iRiS, Waffle and Illogical Impulse families copied from a commit-pinned `snowarch/inir-hub` input, and Hub CLI built from pinned `snowarch/inir-cli` source |
 | Shell | zsh + oh-my-zsh (`ys` theme, `web-search`, `z`, `sudo`, `gpg-agent`) |
 | Editors | Neovim (`vi`/`vim` aliases), VS Code (FHS build), OpenIDE, OpenCode |
 | Gaming | Steam (with Millennium, Proton-CachyOS, Proton-GE, Protontricks), Prism Launcher, Faugus Launcher |
@@ -110,7 +110,7 @@ User-level configuration:
 
 ## Installation
 
-The flake includes iNiR's NixOS module and enables `programs.inir.desktop`. It builds the Hub-capable `inir` CLI from the pinned `snowarch/inir-cli` input and uses `modules/inir-families.nix` to package the requested family plugins into a Nix-managed runtime. The default configuration selects iRiS. This provides iNiR, Niri, and the Niri session; it does not replace GNOME. Do not run iNiR's generic `./setup install` script on this NixOS setup. NixOS support in iNiR is experimental.
+The flake includes iNiR's NixOS module and enables `programs.inir.desktop`. It builds the Hub-capable `inir` CLI from the pinned `snowarch/inir-cli` input and copies requested family plugins from a commit-pinned `snowarch/inir-hub` input into the Nix-managed runtime. The selected Hub commit is recorded in `flake.lock`; update the pin with `nix flake lock --update-input inir-hub`. The current configuration selects all three families. This provides iNiR, Niri, and the Niri session; it does not replace GNOME. Do not run iNiR's generic `./setup install` script on this NixOS setup. NixOS support in iNiR is experimental.
 
 Replace `hardware-configuration.nix` with the output of `nixos-generate-config` for your machine before the first build. The file in this repository belongs to the `asuspc` hardware.
 

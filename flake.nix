@@ -16,6 +16,10 @@
       url = "github:snowarch/inir";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    inir-hub = {
+      url = "github:snowarch/inir-hub";
+      flake = false;
+    };
     inir-cli = {
       url = "github:snowarch/inir-cli";
       flake = false;
@@ -83,19 +87,9 @@
                   let
                     base = inputs.inir.packages.${system}.inir;
                     familyInfo = {
-                      ii = {
-                        version = "2.35.8";
-                        hash = "sha256-cGYz5wOI53R1U1b34X7aPCAuSJEUWXgoANOWt4dsC6A=";
-                      };
-                      waffle = {
-                        version = "2.34.9";
-                        hash = "sha256-Gb5xa0kP3x593cISwyJxIOguafR9X0waHj1YrFff1fk=";
-                        requires = [ "ii" ];
-                      };
-                      iris = {
-                        version = "2.33.65";
-                        hash = "sha256-Qu/5amIB0qbiIWkP47a81uWsq8Z3VgHbGCe//SxApuc=";
-                      };
+                      ii = { };
+                      waffle = { requires = [ "ii" ]; };
+                      iris = { };
                     };
                     requested = final.lib.unique selectedFamilies;
                     families = final.lib.unique (
@@ -103,25 +97,16 @@
                         (familyInfo.${family}.requires or [ ]) ++ [ family ]
                       ) requested
                     );
-                    archives = final.lib.genAttrs families (family:
-                      final.fetchurl {
-                        url = "https://inir.space/hub/packages/${family}-${familyInfo.${family}.version}.tar.gz";
-                        inherit (familyInfo.${family}) hash;
-                      }
-                    );
                     installFamily = family: ''
                       mkdir -p "$runtime/modules/${family}"
-                      tar -xzf "${archives.${family}}" -C "$runtime/modules/${family}"
-                      find "$runtime/modules/${family}" \
-                        -type f \( -name '*.qml' -o -name '*.js' -o -name '*.sh' -o -name '*.py' \) \
-                        -exec sed -i '1!s#/usr/bin/##g' {} +
+                      cp -a "${inputs.inir-hub}/families/${family}/." "$runtime/modules/${family}/"
                     '';
                   in
                   final.stdenvNoCC.mkDerivation {
                     pname = "inir-with-families";
-                    version = "${base.version}-${final.lib.concatStringsSep "-" (map (family: "${family}-${familyInfo.${family}.version}") families)}";
+                    version = "${base.version}-hub-${builtins.substring 0 7 inputs.inir-hub.rev}-${final.lib.concatStringsSep "-" families}";
                     dontUnpack = true;
-                    nativeBuildInputs = [ final.gnutar final.gzip final.gnused final.makeWrapper ];
+                    nativeBuildInputs = [ final.makeWrapper ];
                     installPhase = ''
                       runtime="$out/share/quickshell/inir"
                       mkdir -p "$runtime" "$out/bin"
