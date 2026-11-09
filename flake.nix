@@ -84,16 +84,16 @@
                     base = inputs.inir.packages.${system}.inir;
                     familyInfo = {
                       ii = {
-                        version = "2.35.6";
+                        version = "2.35.8";
                         hash = "sha256-cGYz5wOI53R1U1b34X7aPCAuSJEUWXgoANOWt4dsC6A=";
                       };
                       waffle = {
-                        version = "2.34.8";
+                        version = "2.34.9";
                         hash = "sha256-Gb5xa0kP3x593cISwyJxIOguafR9X0waHj1YrFff1fk=";
                         requires = [ "ii" ];
                       };
                       iris = {
-                        version = "2.33.62";
+                        version = "2.33.65";
                         hash = "sha256-Qu/5amIB0qbiIWkP47a81uWsq8Z3VgHbGCe//SxApuc=";
                       };
                     };
