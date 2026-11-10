@@ -148,6 +148,20 @@
       extraPackages = with pkgs; [
         libsecret
         swayidle
+        darkly
+        imagemagick
+        geoclue2
+        tesseract
+        wlsunset
+        cava
+        yt-dlp
+        socat
+        deno
+        networkmanagerapplet
+        kdePackages.syntax-highlighting
+        kdePackages.plasma-integration
+        kdePackages.kconfig
+        kdePackages.layer-shell-qt
       ];
     };
     appimage = {
