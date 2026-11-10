@@ -30,9 +30,10 @@
     unsloth-desktop
     uv
     transmission_4-qt
-    nautilus
     xwayland-satellite
     qt6Packages.qtstyleplugin-kvantum
+    pcmanfm-qt
+    kdePackages.ark
 
     nur.repos.trev.helium
     nur.repos.quriosity.zen-browser
@@ -43,7 +44,6 @@
     nur.repos.quriosity.materialgram
   ];
 
-  # OBS
   programs = {
     vscode = {
       enable = true;
@@ -58,7 +58,7 @@
         theme = "dark";
         language = "en";
         closeToTray = true;
-        autostart.enable = true;
+        autostart.enable = false;
       };
     };
   };
@@ -77,6 +77,12 @@
   home = {
     username = "quriosity";
     homeDirectory = "/home/quriosity";
+    pointerCursor = {
+      gtk.enable = true;
+      x11.enable = true;
+      package = pkgs.bibata-cursors;
+      name = "Bibata-Modern-Ice";
+    };
   };
 
   # --------------------------------------------------------------------------------------------------------

@@ -13,18 +13,7 @@
   # --------------------------------------------------------------------------------------------------------
 
   boot = let
-    kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-bore-lto-x86_64-v3.extend (
-      _final: prev: {
-        vmware = prev.vmware.overrideAttrs (old: {
-          nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.buildPackages.kmodigest ];
-          postFixup = (old.postFixup or "") + ''
-            for module in $out/lib/modules/*/misc/*.ko; do
-              kmodigest "$module"
-            done
-          '';
-        });
-      }
-    );
+    kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-bore-lto-x86_64-v3
   in {
     inherit kernelPackages;
     loader = {
@@ -96,10 +85,6 @@
       open = true;
       nvidiaSettings = false;
       package = config.boot.kernelPackages.nvidiaPackages.latest;
-    };
-    openrazer = {
-      enable = true;
-      users = ["quriosity"];
     };
     nvidia-container-toolkit.enable = true;
   };
@@ -214,6 +199,7 @@
       enableSSHSupport = true;
     };
     mtr.enable = true;
+    virt-manager.enable = true;
   };
 
   quriosity = {
@@ -235,10 +221,9 @@
       enable = true;
       defaultNetwork.settings.dns_enabled = true;
     };
-    vmware = {
-      host = {
-        enable = true;
-      };
+    libvirtd = {
+      enable = true;
+      qemu.vhostUserPackages = with pkgs; [ virtiofsd ];
     };
   };
 
@@ -313,6 +298,7 @@
 
   networking = {
     networkmanager.enable = true;
+    firewall.trustedInterfaces = [ "virbr0" ];
     hosts = {
       # GTA Online fix
       "0.0.0.0" = [
