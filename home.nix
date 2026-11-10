@@ -78,6 +78,7 @@
     username = "quriosity";
     homeDirectory = "/home/quriosity";
     pointerCursor = {
+      enable = true;
       gtk.enable = true;
       x11.enable = true;
       package = pkgs.bibata-cursors;
