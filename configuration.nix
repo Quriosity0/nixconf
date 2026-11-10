@@ -131,7 +131,6 @@
       extraPackages = with pkgs; [
         libsecret
         swayidle
-        darkly
         imagemagick
         geoclue2
         tesseract

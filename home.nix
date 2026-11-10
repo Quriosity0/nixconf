@@ -31,7 +31,8 @@
     uv
     transmission_4-qt
     xwayland-satellite
-    qt6Packages.qtstyleplugin-kvantum
+    qt6Packages.qt6ct
+    libsForQt5.qt5ct
     pcmanfm-qt
     kdePackages.ark
 
@@ -59,6 +60,25 @@
         language = "en";
         closeToTray = true;
         autostart.enable = false;
+      };
+    };
+  };
+
+  qt = {
+    style.package = with pkgs; [ darkly-qt5 darkly ];
+    platformTheme.name = "qtct";
+    qt5ctSettings = {
+      Appearance = {
+        icon_theme = "Hatter-Blue";
+        standard_dialogs = "xdgdesktopportal";
+        style = "darkly";
+      };
+    };
+    qt6ctSettings = {
+      Appearance = {
+        icon_theme = "Hatter-Blue";
+        standard_dialogs = "xdgdesktopportal";
+        style = "darkly";
       };
     };
   };
