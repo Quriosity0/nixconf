@@ -12,10 +12,8 @@
   # ----------------------------------------- AND BASIC SETTINGS -------------------------------------------
   # --------------------------------------------------------------------------------------------------------
 
-  boot = let
-    kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-bore-lto-x86_64-v3
-  in {
-    inherit kernelPackages;
+  boot = {
+    kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-bore-lto-x86_64-v3;
     loader = {
       limine = {
         enable = true;
