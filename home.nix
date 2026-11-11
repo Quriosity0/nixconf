@@ -69,20 +69,24 @@
   # --------------------------------------------------------------------------------------------------------
 
   qt = {
-    style.package = with pkgs; [ darkly-qt5 darkly ];
+    enable = true;
+    style = {
+      name = "Darkly";
+      package = pkgs.darkly;
+    };
     platformTheme.name = "qtct";
     qt5ctSettings = {
       Appearance = {
         icon_theme = "Hatter-Blue";
         standard_dialogs = "xdgdesktopportal";
-        style = "darkly";
+        style = "Fusion";
       };
     };
     qt6ctSettings = {
       Appearance = {
         icon_theme = "Hatter-Blue";
         standard_dialogs = "xdgdesktopportal";
-        style = "darkly";
+        style = "Darkly";
       };
     };
   };

@@ -1,5 +1,17 @@
 { config, pkgs, inputs, ... }:
 
+let
+  inirFeaturePackages = with pkgs; [
+    cliphist
+    grim
+    hyprpicker
+    imagemagick
+    slurp
+    tesseract
+    wf-recorder
+    wl-clipboard
+  ];
+in
 {
   imports =
     [
@@ -105,7 +117,9 @@
 
     zenity
     nur.repos.quriosity.tabby
-  ];
+  ] ++ inirFeaturePackages;
+
+  services.power-profiles-daemon.enable = true;
 
   # Package settings
   programs = {
@@ -131,9 +145,7 @@
       extraPackages = with pkgs; [
         libsecret
         swayidle
-        imagemagick
         geoclue2
-        tesseract
         wlsunset
         cava
         yt-dlp
@@ -144,7 +156,7 @@
         kdePackages.plasma-integration
         kdePackages.kconfig
         kdePackages.layer-shell-qt
-      ];
+      ] ++ inirFeaturePackages;
     };
     appimage = {
       enable = true;
