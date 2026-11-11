@@ -79,7 +79,13 @@
       Appearance = {
         icon_theme = "Hatter-Blue";
         standard_dialogs = "xdgdesktopportal";
-        style = "Fusion";
+        style = "Darkly";
+        custom_palette = true;
+        color_scheme_path = "${config.xdg.configHome}/qt6ct/colors/darktheme.conf";
+      };
+      Fonts = {
+        fixed = "\"Montserrat Alternates,12\"";
+        general = "\"Montserrat Alternates,12\"";
       };
     };
     qt6ctSettings = {
@@ -87,9 +93,22 @@
         icon_theme = "Hatter-Blue";
         standard_dialogs = "xdgdesktopportal";
         style = "Darkly";
+        custom_palette = true;
+        color_scheme_path = "${config.xdg.configHome}/qt6ct/colors/darktheme.conf";
+      };
+      Fonts = {
+        fixed = "\"Montserrat Alternates,12\"";
+        general = "\"Montserrat Alternates,12\"";
       };
     };
   };
+
+  xdg.configFile."qt6ct/colors/darktheme.conf".text = ''
+    [ColorScheme]
+    active_colors=#ffffffff, #ff424245, #ff979797, #ff5e5c5b, #ff302f2e, #ff4a4947, #ffffffff, #ffffffff, #ffffffff, #ff3d3d3d, #ff222020, #ffe7e4e0, #ff12608a, #fff9f9f9, #ff0986d3, #ffa70b06, #ff5c5b5a, #ffffffff, #ff3f3f36, #ffffffff, #80ffffff
+    disabled_colors=#ff808080, #ff424245, #ff979797, #ff5e5c5b, #ff302f2e, #ff4a4947, #ff808080, #ffffffff, #ff808080, #ff3d3d3d, #ff222020, #ffe7e4e0, #ff12608a, #ff808080, #ff0986d3, #ffa70b06, #ff5c5b5a, #ffffffff, #ff3f3f36, #ffffffff, #80ffffff
+    inactive_colors=#ffffffff, #ff424245, #ff979797, #ff5e5c5b, #ff302f2e, #ff4a4947, #ffffffff, #ffffffff, #ffffffff, #ff3d3d3d, #ff222020, #ffe7e4e0, #ff12608a, #fff9f9f9, #ff0986d3, #ffa70b06, #ff5c5b5a, #ffffffff, #ff3f3f36, #ffffffff, #80ffffff
+  '';
   
   gtk = {
     enable = true;
