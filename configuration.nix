@@ -203,6 +203,7 @@
     sddm-themes = {
       echo = {
         enable = true;
+        package = pkgs.nur.repos.quriosity.echo-sddm;
         type = "pure";
         loginMode = "select";
       };
