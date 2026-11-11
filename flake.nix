@@ -24,6 +24,10 @@
       url = "github:snowarch/inir-cli";
       flake = false;
     };
+    inir-accel = {
+      url = "github:snowarch/inir-accel/v0.1.1";
+      flake = false;
+    };
     proxy-suite = {
       url = "github:FUFSoB/proxy-suite-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -83,6 +87,30 @@
                   };
                 };
 
+                inir-accel = final.rustPlatform.buildRustPackage {
+                  pname = "inir-accel";
+                  version = "0.1.1";
+                  src = inputs.inir-accel;
+                  cargoLock.lockFile = "${inputs.inir-accel}/Cargo.lock";
+                  cargoBuildFlags = [ "-p" "inir-accel" ];
+                  cargoTestFlags = [ "-p" "inir-core" "-p" "inir-accel" ];
+                  postPatch = ''
+                    substituteInPlace crates/inir-accel/src/main.rs \
+                      --replace-fail '"inir-accel 0.1.0 —' '"inir-accel 0.1.1 —'
+                  '';
+                  postInstall = ''
+                    install -Dm644 LICENSE "$out/share/licenses/inir-accel/LICENSE"
+                    install -Dm644 LICENSE-GPL "$out/share/licenses/inir-accel/LICENSE-GPL"
+                  '';
+                  meta = {
+                    description = "Native accelerators for iNiR";
+                    homepage = "https://github.com/snowarch/inir-accel";
+                    license = final.lib.licenses.lgpl3Only;
+                    mainProgram = "inir-accel";
+                    platforms = final.lib.platforms.linux;
+                  };
+                };
+
                 inirWithFamilies = selectedFamilies:
                   let
                     base = inputs.inir.packages.${system}.inir;
@@ -112,6 +140,9 @@
                       mkdir -p "$runtime" "$out/bin"
                       cp -a ${base}/share/quickshell/inir/. "$runtime/"
                       chmod u+w "$runtime" "$runtime/modules"
+                      # wf-recorder does not support the stale standalone -t argument.
+                      chmod u+w "$runtime/scripts/videos" "$runtime/scripts/videos/record.sh"
+                      sed -i '/^[[:space:]]*-t[[:space:]]*$/d' "$runtime/scripts/videos/record.sh"
                       ${final.lib.concatMapStringsSep "\n" installFamily families}
                       if [ -e "$runtime/plugins.list" ]; then
                         chmod u+w "$runtime/plugins.list"
@@ -121,6 +152,7 @@
                         --set INIR_SYSTEM_RUNTIME_DIR "$runtime" \
                         --set INIR_FALLBACK_SYSTEM_RUNTIME_DIR "$runtime" \
                         --set INIR_QS_BIN "${final.quickshell}/bin/quickshell" \
+                        --set INIR_ACCEL "${final.inir-accel}/bin/inir-accel" \
                         --prefix PATH : "${final.lib.makeBinPath [ final.libsecret final.swayidle ]}"
                     '';
                     meta = {

@@ -97,6 +97,7 @@
       name = "Darkly";
       package = pkgs.nur.repos.quriosity.darkly-gtk;
     };
+    gtk4.theme = config.gtk.theme;
   };
 
   # --------------------------------------------------------------------------------------------------------

@@ -138,6 +138,23 @@
         "type": "github"
       }
     },
+    "inir-accel": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1794171327,
+        "narHash": "sha256-uw6SztyW19Ktp+ZYw+6/RgGjf6KQwMqJpndjRRVTSKM=",
+        "owner": "snowarch",
+        "repo": "inir-accel",
+        "rev": "d40f01f35e175ba38d1015b59309ff1b405e336d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "snowarch",
+        "ref": "v0.1.1",
+        "repo": "inir-accel",
+        "type": "github"
+      }
+    },
     "inir-cli": {
       "flake": false,
       "locked": {
@@ -433,6 +450,7 @@
       "inputs": {
         "home-manager": "home-manager",
         "inir": "inir",
+        "inir-accel": "inir-accel",
         "inir-cli": "inir-cli",
         "inir-hub": "inir-hub",
         "millennium": "millennium",

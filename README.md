@@ -110,7 +110,7 @@ User-level configuration:
 
 ## Installation
 
-The flake includes iNiR's NixOS module and enables `programs.inir.desktop`. It builds the Hub-capable `inir` CLI from the pinned `snowarch/inir-cli` input and copies requested family plugins from a commit-pinned `snowarch/inir-hub` input into the Nix-managed runtime. The selected Hub commit is recorded in `flake.lock`; update the pin with `nix flake lock --update-input inir-hub`. The current configuration selects all three families. This provides iNiR, Niri, and the Niri session; it does not replace GNOME. Do not run iNiR's generic `./setup install` script on this NixOS setup. NixOS support in iNiR is experimental.
+The flake includes iNiR's NixOS module and enables `programs.inir.desktop`. It builds the Hub-capable `inir` CLI from the pinned `snowarch/inir-cli` input, builds `inir-accel` from its pinned Rust source, and copies requested family plugins from a commit-pinned `snowarch/inir-hub` input into the Nix-managed runtime. `INIR_ACCEL` points iNiR at the immutable Nix package rather than the mutable updater-managed user directory. The source pins are recorded in `flake.lock`; update the Hub pin with `nix flake lock --update-input inir-hub` and the accelerator pin with `nix flake lock --update-input inir-accel`. The current configuration selects all three families. This provides iNiR, Niri, and the Niri session; Do not run iNiR's generic `./setup install` script on this NixOS setup. NixOS support in iNiR is experimental.
 
 Replace `hardware-configuration.nix` with the output of `nixos-generate-config` for your machine before the first build. The file in this repository belongs to the `asuspc` hardware.
 

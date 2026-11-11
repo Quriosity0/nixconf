@@ -3,9 +3,14 @@
 let
   inirFeaturePackages = with pkgs; [
     cliphist
+    ffmpeg
     grim
     hyprpicker
     imagemagick
+    inir-accel
+    jq
+    libnotify
+    pulseaudio
     slurp
     tesseract
     wf-recorder
@@ -118,8 +123,6 @@ in
     zenity
     nur.repos.quriosity.tabby
   ] ++ inirFeaturePackages;
-
-  services.power-profiles-daemon.enable = true;
 
   # Package settings
   programs = {
@@ -274,6 +277,7 @@ in
           ]);
       };
     };
+    power-profiles-daemon.enable = true;
     flatpak.enable = true;
   };
 
@@ -298,8 +302,12 @@ in
     };
   };
 
-  environment.stub-ld.enable = false;
-
+  environment = {
+    stub-ld.enable = false;
+    sessionVariables = {
+      INIR_ACCEL = "${pkgs.inir-accel}/bin/inir-accel";
+    };
+  };
   # --------------------------------------------------------------------------------------------------------
   # ------------------------------------------ NETWORKING --------------------------------------------------
   # --------------------------------------------------------------------------------------------------------
