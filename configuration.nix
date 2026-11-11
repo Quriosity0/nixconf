@@ -15,6 +15,7 @@ let
     tesseract
     wf-recorder
     wl-clipboard
+    xdg-user-dirs
   ];
 in
 {
