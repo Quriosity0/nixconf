@@ -91,7 +91,7 @@
     enable = true;
     theme = {
       name = "Darkly";
-      package = nur.repos.quriosity.darkly-gtk;
+      package = pkgs.nur.repos.quriosity.darkly-gtk;
     };
   };
 
