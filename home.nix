@@ -27,7 +27,6 @@
     xnviewmp
     distrobox
     opencode
-    unsloth-desktop
     uv
     transmission_4-qt
     xwayland-satellite
