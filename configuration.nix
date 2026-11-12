@@ -280,6 +280,7 @@ in
     };
     power-profiles-daemon.enable = true;
     flatpak.enable = true;
+    gvfs.enable = true;
   };
 
   nix = {
